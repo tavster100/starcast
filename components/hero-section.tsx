@@ -135,7 +135,7 @@ export function HeroSection() {
             transition={!isMobile ? { delay: 0.4, duration: 0.8 } : {}}
             className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-white max-w-3xl"
           >
-            Cu StarCast pe val devii tot mai viral
+            Aici începe drumul spre influență și profit
           </motion.h1>
 
           <motion.p
