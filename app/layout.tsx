@@ -21,11 +21,17 @@ export default function RootLayout({
   return (
     <html lang="ro" className="dark" style={{ colorScheme: "dark" }}>
       <head>
-        <link
+        {/* <link
           rel="preload"
           href="/videos/tiktok-live-bg.mp4"
           as="video"
           type="video/mp4"
+        /> */}
+        <link
+          rel="preload"
+          href="/images/tiktok-preloader.png"
+          as="image"
+          type="image/png"
         />
 
         <meta name="theme-color" content="#000000" />

@@ -119,7 +119,11 @@ export function HeroSection() {
             <img
               src="/images/logo.png"
               alt="StarCast Logo"
-              className="w-24 h-24 object-contain"
+              className={
+                isMobile
+                  ? "w-25 h-25 object-contain"
+                  : "w-[14rem] h-[14rem] object-contain"
+              }
             />
           </motion.div>
 
@@ -173,7 +177,6 @@ export function HeroSection() {
         </motion.div>
 
         {/* Decorative elements */}
-        <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-background to-transparent"></div>
       </motion.section>
 
       {/* Formular de înscriere/consultație */}
