@@ -5,7 +5,7 @@ declare const self: ServiceWorkerGlobalScope;
 const CACHE_NAME = "starcast-cache-v1";
 
 // Resurse care vor fi pre-cache-uite
-const PRECACHE_ASSETS = ["/", "/images/tiktok-live-poster.png", "/videos/tiktok-live-bg.mp4"];
+const PRECACHE_ASSETS = ["/", "/videos/tiktok-live-bg.mp4"];
 
 // Instalare service worker
 self.addEventListener("install", (event: ExtendableEvent) => {

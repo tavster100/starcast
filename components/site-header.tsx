@@ -1,35 +1,35 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Star } from "lucide-react"
-import Link from "next/link"
-import { SignupForm, type FormMode } from "@/components/signup-form"
-import { MobileMenu } from "@/components/mobile-menu"
-import { motion, useScroll, useMotionValueEvent } from "framer-motion"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Star } from "lucide-react";
+import Link from "next/link";
+import { SignupForm, type FormMode } from "@/components/signup-form";
+import { MobileMenu } from "@/components/mobile-menu";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 
 export function SiteHeader() {
-  const [isFormOpen, setIsFormOpen] = useState(false)
-  const [formMode, setFormMode] = useState<FormMode>("signup")
-  const [isScrolled, setIsScrolled] = useState(false)
-  const { scrollY } = useScroll()
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [formMode, setFormMode] = useState<FormMode>("signup");
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { scrollY } = useScroll();
 
   // Detectează scroll-ul pentru a schimba stilul header-ului
   useMotionValueEvent(scrollY, "change", (latest) => {
-    setIsScrolled(latest > 50)
-  })
+    setIsScrolled(latest > 50);
+  });
 
   const openForm = (mode: FormMode) => {
-    setFormMode(mode)
-    setIsFormOpen(true)
-  }
+    setFormMode(mode);
+    setIsFormOpen(true);
+  };
 
   return (
     <>
       <motion.header
         className={`sticky top-0 z-50 w-full border-b transition-all duration-300 ${
           isScrolled
-            ? "border-white/10 bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/30"
+            ? "border-white/10 bg-[#181433] backdrop-blur-lg supports-[backdrop-filter]:bg-[#181433]"
             : "border-transparent bg-transparent"
         }`}
         initial={{ y: -100 }}
@@ -37,34 +37,45 @@ export function SiteHeader() {
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
       >
         <div className="container flex h-16 items-center justify-between">
-          <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
-            <Link href="/" className="flex items-center gap-2">
-              <Star className="h-6 w-6 text-pink-500" />
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-pink-500 bg-clip-text text-transparent">
-                StarCast
-              </span>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <Link href="/" className="flex items-center">
+              <img
+                src="/images/logo.png"
+                alt="StarCast Logo"
+                className="h-16 w-16"
+              />
             </Link>
           </motion.div>
 
           <nav className="hidden md:flex gap-6">
-            <Link href="#about" className="text-sm font-medium hover:text-primary transition-colors relative group">
+            <Link
+              href="#about"
+              className="text-sm font-medium transition-colors relative group"
+            >
               Despre
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-pink-500 transition-all duration-300 group-hover:w-full"></span>
             </Link>
             <Link
               href="#testimonials"
-              className="text-sm font-medium hover:text-primary transition-colors relative group"
+              className="text-sm font-medium  transition-colors relative group"
             >
               Testimoniale
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-pink-500 transition-all duration-300 group-hover:w-full"></span>
             </Link>
-            <Link href="#talent" className="text-sm font-medium hover:text-primary transition-colors relative group">
+            <Link
+              href="#talent"
+              className="text-sm font-medium  transition-colors relative group"
+            >
               Talente
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-pink-500 transition-all duration-300 group-hover:w-full"></span>
             </Link>
             <Link
               href="#how-it-works"
-              className="text-sm font-medium hover:text-primary transition-colors relative group"
+              className="text-sm font-medium  transition-colors relative group"
             >
               Cum Funcționează
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-pink-500 transition-all duration-300 group-hover:w-full"></span>
@@ -99,7 +110,11 @@ export function SiteHeader() {
       </motion.header>
 
       {/* Formular de înscriere/consultație */}
-      <SignupForm open={isFormOpen} onOpenChange={setIsFormOpen} mode={formMode} />
+      <SignupForm
+        open={isFormOpen}
+        onOpenChange={setIsFormOpen}
+        mode={formMode}
+      />
     </>
-  )
+  );
 }

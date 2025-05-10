@@ -1,40 +1,48 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useRef, memo } from "react"
-import { Button } from "@/components/ui/button"
-import { Star, Play } from "lucide-react"
-import { motion, useScroll, useTransform } from "framer-motion"
-import { SignupForm, type FormMode } from "@/components/signup-form"
-import { useMobile } from "@/hooks/use-mobile"
-import { OptimizedVideo } from "@/components/optimized-video"
+import { useState, useRef, memo } from "react";
+import { Button } from "@/components/ui/button";
+import { Star, Play } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { SignupForm, type FormMode } from "@/components/signup-form";
+import { useMobile } from "@/hooks/use-mobile";
+import { OptimizedVideo } from "@/components/optimized-video";
 
 // Memoized floating element component to prevent unnecessary re-renders
-const FloatingElement = memo(({ className, children }: { className: string; children: React.ReactNode }) => {
-  return <div className={className}>{children}</div>
-})
-FloatingElement.displayName = "FloatingElement"
+const FloatingElement = memo(
+  ({
+    className,
+    children,
+  }: {
+    className: string;
+    children: React.ReactNode;
+  }) => {
+    return <div className={className}>{children}</div>;
+  }
+);
+FloatingElement.displayName = "FloatingElement";
 
 export function HeroSection() {
-  const [isFormOpen, setIsFormOpen] = useState(false)
-  const [formMode, setFormMode] = useState<FormMode>("signup")
-  const ref = useRef<HTMLElement>(null)
-  const isMobile = useMobile()
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [formMode, setFormMode] = useState<FormMode>("signup");
+  const ref = useRef<HTMLElement>(null);
+  const isMobile = useMobile();
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end start"],
-  })
+  });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9])
-  const y = useTransform(scrollYProgress, [0, 0.5], [0, 100])
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9]);
+  const y = useTransform(scrollYProgress, [0, 0.5], [0, 100]);
 
   const openForm = (mode: FormMode) => {
-    setFormMode(mode)
-    setIsFormOpen(true)
-  }
+    setFormMode(mode);
+    setIsFormOpen(true);
+  };
 
   // Variante de animație pentru elementele mobile
   const mobileItemVariants = {
@@ -48,7 +56,7 @@ export function HeroSection() {
         ease: "easeOut",
       },
     }),
-  }
+  };
 
   return (
     <>
@@ -61,28 +69,24 @@ export function HeroSection() {
         <div className="absolute inset-0 z-0">
           <OptimizedVideo
             src="/videos/tiktok-live-bg.mp4"
-            poster="/images/tiktok-live-poster.png"
             priority={true}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/60 backdrop-blur-sm"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/20 "></div>
         </div>
 
         {/* TikTok UI Overlays - Floating elements - Optimizate pentru mobil */}
         {!isMobile && (
           <>
-            <FloatingElement className="absolute top-1/4 right-10 animate-float-slow hidden md:block">
+            <FloatingElement className="absolute top-1/4 right-20 animate-float-slow hidden md:block">
               <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 shadow-glow">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full overflow-hidden">
-                    <img src="/images/creator-1.png" alt="Creator" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="text-white text-sm">@maria_live</div>
+                  <div className="text-white text-sm">❤️ Tap Tap</div>
                 </div>
               </div>
             </FloatingElement>
 
-            <FloatingElement className="absolute bottom-1/4 left-10 animate-float hidden md:block">
+            <FloatingElement className="absolute bottom-1/4 left-20 animate-float hidden md:block">
               <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 shadow-glow">
                 <div className="flex items-center gap-2">
                   <Star className="w-5 h-5 text-yellow-400" />
@@ -91,7 +95,7 @@ export function HeroSection() {
               </div>
             </FloatingElement>
 
-            <FloatingElement className="absolute top-1/3 left-1/4 animate-float-slow hidden lg:block">
+            <FloatingElement className="absolute top-1/4 left-1/4 animate-float-slow hidden lg:block">
               <div className="bg-white/10 backdrop-blur-md rounded-xl p-3 shadow-glow">
                 <div className="flex items-center gap-2">
                   <div className="text-white text-sm">🔥 Devine viral!</div>
@@ -110,12 +114,13 @@ export function HeroSection() {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 100, delay: 0.2 }}
-            className="flex items-center gap-2 mb-2 md:mb-4"
+            className="flex items-center justify-center w-full mx-auto"
           >
-            <Star className="h-6 w-6 md:h-8 md:w-8 text-pink-500" />
-            <h2 className="text-xl md:text-3xl font-bold bg-gradient-to-r from-blue-400 to-pink-500 bg-clip-text text-transparent">
-              StarCast
-            </h2>
+            <img
+              src="/images/logo.png"
+              alt="StarCast Logo"
+              className="w-24 h-24 object-contain"
+            />
           </motion.div>
 
           <motion.h1
@@ -126,7 +131,7 @@ export function HeroSection() {
             transition={!isMobile ? { delay: 0.4, duration: 0.8 } : {}}
             className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tighter text-white max-w-3xl"
           >
-            Strălucește în Direct cu StarCast
+            Cu StarCast pe val devii tot mai viral
           </motion.h1>
 
           <motion.p
@@ -137,8 +142,8 @@ export function HeroSection() {
             transition={!isMobile ? { delay: 0.6, duration: 0.8 } : {}}
             className="text-base sm:text-lg md:text-xl text-gray-200 max-w-2xl"
           >
-            Transformăm talente în ascensiune în vedete pe TikTok Live — alătură-te rețelei de creatori construită
-            pentru noua generație.
+            Transformăm talente noi în vedete pe TikTok Live <br></br>Alătură-te
+            rețelei de creatori construită pentru noua generație.
           </motion.p>
 
           <motion.div
@@ -172,7 +177,11 @@ export function HeroSection() {
       </motion.section>
 
       {/* Formular de înscriere/consultație */}
-      <SignupForm open={isFormOpen} onOpenChange={setIsFormOpen} mode={formMode} />
+      <SignupForm
+        open={isFormOpen}
+        onOpenChange={setIsFormOpen}
+        mode={formMode}
+      />
     </>
-  )
+  );
 }

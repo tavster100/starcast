@@ -1,40 +1,40 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import Link from "next/link"
-import { Star, X, Menu } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import type { FormMode } from "@/components/signup-form"
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
+import { Star, X, Menu } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import type { FormMode } from "@/components/signup-form";
 
 interface MobileMenuProps {
-  onOpenForm: (mode: FormMode) => void
+  onOpenForm: (mode: FormMode) => void;
 }
 
 export function MobileMenu({ onOpenForm }: MobileMenuProps) {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false);
 
   // Dezactivează scroll-ul când meniul este deschis
   useEffect(() => {
     if (isOpen) {
-      document.body.style.overflow = "hidden"
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "auto"
+      document.body.style.overflow = "auto";
     }
 
     return () => {
-      document.body.style.overflow = "auto"
-    }
-  }, [isOpen])
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
 
-  const toggleMenu = () => setIsOpen(!isOpen)
+  const toggleMenu = () => setIsOpen(!isOpen);
 
-  const closeMenu = () => setIsOpen(false)
+  const closeMenu = () => setIsOpen(false);
 
   const handleOpenForm = (mode: FormMode) => {
-    closeMenu()
-    onOpenForm(mode)
-  }
+    closeMenu();
+    onOpenForm(mode);
+  };
 
   const menuVariants = {
     closed: {
@@ -55,19 +55,19 @@ export function MobileMenu({ onOpenForm }: MobileMenuProps) {
         delayChildren: 0.2,
       },
     },
-  }
+  };
 
   const itemVariants = {
     closed: { x: 20, opacity: 0 },
     open: { x: 0, opacity: 1 },
-  }
+  };
 
   const menuItems = [
     { href: "#about", label: "Despre" },
     { href: "#testimonials", label: "Testimoniale" },
     { href: "#talent", label: "Talente" },
     { href: "#how-it-works", label: "Cum Funcționează" },
-  ]
+  ];
 
   return (
     <>
@@ -97,11 +97,16 @@ export function MobileMenu({ onOpenForm }: MobileMenuProps) {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center mb-8">
-                <Link href="/" className="flex items-center gap-2" onClick={closeMenu}>
-                  <Star className="h-6 w-6 text-pink-500" />
-                  <span className="text-xl font-bold bg-gradient-to-r from-blue-500 to-pink-500 bg-clip-text text-transparent">
-                    StarCast
-                  </span>
+                <Link
+                  href="/"
+                  className="flex items-center gap-2"
+                  onClick={closeMenu}
+                >
+                  <img
+                    src="/images/logo.png"
+                    alt="StarCast Logo"
+                    className="h-16 w-16"
+                  />
                 </Link>
                 <button
                   onClick={closeMenu}
@@ -114,7 +119,12 @@ export function MobileMenu({ onOpenForm }: MobileMenuProps) {
 
               <nav className="flex flex-col space-y-6 mb-8">
                 {menuItems.map((item, index) => (
-                  <motion.div key={index} variants={itemVariants} whileHover={{ x: 5 }} whileTap={{ scale: 0.95 }}>
+                  <motion.div
+                    key={index}
+                    variants={itemVariants}
+                    whileHover={{ x: 5 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
                     <Link
                       href={item.href}
                       className="text-lg font-medium hover:text-primary transition-colors relative group flex items-center"
@@ -149,20 +159,41 @@ export function MobileMenu({ onOpenForm }: MobileMenuProps) {
                 </motion.div>
               </div>
 
-              <motion.div variants={itemVariants} className="absolute bottom-8 left-0 right-0 px-6">
+              <motion.div
+                variants={itemVariants}
+                className="absolute bottom-8 left-0 right-0 px-6"
+              >
                 <div className="flex justify-center space-x-4">
-                  <Link href="#" className="text-gray-400 hover:text-white transition-colors">
-                    <motion.div whileHover={{ scale: 1.2, rotate: 5 }} whileTap={{ scale: 0.9 }}>
+                  <Link
+                    href="#"
+                    className="text-gray-400 hover:text-white transition-colors"
+                  >
+                    <motion.div
+                      whileHover={{ scale: 1.2, rotate: 5 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
                       <Star className="h-5 w-5" />
                     </motion.div>
                   </Link>
-                  <Link href="#" className="text-gray-400 hover:text-white transition-colors">
-                    <motion.div whileHover={{ scale: 1.2, rotate: 5 }} whileTap={{ scale: 0.9 }}>
+                  <Link
+                    href="#"
+                    className="text-gray-400 hover:text-white transition-colors"
+                  >
+                    <motion.div
+                      whileHover={{ scale: 1.2, rotate: 5 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
                       <Star className="h-5 w-5" />
                     </motion.div>
                   </Link>
-                  <Link href="#" className="text-gray-400 hover:text-white transition-colors">
-                    <motion.div whileHover={{ scale: 1.2, rotate: 5 }} whileTap={{ scale: 0.9 }}>
+                  <Link
+                    href="#"
+                    className="text-gray-400 hover:text-white transition-colors"
+                  >
+                    <motion.div
+                      whileHover={{ scale: 1.2, rotate: 5 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
                       <Star className="h-5 w-5" />
                     </motion.div>
                   </Link>
@@ -173,5 +204,5 @@ export function MobileMenu({ onOpenForm }: MobileMenuProps) {
         )}
       </AnimatePresence>
     </>
-  )
+  );
 }
