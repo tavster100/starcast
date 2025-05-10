@@ -4,6 +4,13 @@ import { z } from "zod"
 import { Resend } from "resend"
 import nodemailer from "nodemailer"
 
+type EmailResult = {
+  success: boolean
+  error?: string
+  messageId?: string
+  simulated?: boolean
+}
+
 // Schema de validare pentru datele de înscriere
 const signupSchema = z.object({
   name: z.string().min(2),
@@ -153,7 +160,7 @@ async function sendEmailToOwner(data: {
   email: string
   tiktokId: string
   formType: "signup" | "consultation"
-}) {
+}) : Promise<EmailResult> {
   if (isPreviewEnvironment()) {
     console.log("Simulare trimitere email către proprietar:", {
       to: "owner@eaglevision.info",
@@ -375,12 +382,15 @@ export async function submitSignupForm(formData: unknown) {
       const userEmailResult = await sendConfirmationEmail(validatedData)
 
       if (!userEmailResult.success) {
-        console.error("Eroare la trimiterea email-ului de confirmare:", userEmailResult.error)
+        const errorMessage = 'error' in userEmailResult && userEmailResult.error
+          ? userEmailResult.error
+          : 'Eroare necunoscută';
+      
+        console.error("Eroare la trimiterea email-ului de confirmare:", errorMessage);
+      
         if (emailSent) {
-          emailError = "Nu am putut trimite email-ul de confirmare, dar înregistrarea a fost procesată."
+          emailError = "Nu am putut trimite email-ul de confirmare, dar înregistrarea a fost procesată.";
         }
-      } else if (!emailSent) {
-        emailSent = true
       }
     } catch (error) {
       console.error("Excepție la trimiterea email-ului de confirmare:", error)

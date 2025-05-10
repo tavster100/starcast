@@ -1,40 +1,42 @@
 /// <reference lib="webworker" />
 
-declare const self: ServiceWorkerGlobalScope
+declare const self: ServiceWorkerGlobalScope;
 
-const CACHE_NAME = "starcast-cache-v1"
+const CACHE_NAME = "starcast-cache-v1";
 
 // Resurse care vor fi pre-cache-uite
-const PRECACHE_ASSETS = ["/", "/images/tiktok-live-poster.png", "/videos/tiktok-live-bg.mp4"]
+const PRECACHE_ASSETS = ["/", "/images/tiktok-live-poster.png", "/videos/tiktok-live-bg.mp4"];
 
 // Instalare service worker
-self.addEventListener("install", (event) => {
+self.addEventListener("install", (event: ExtendableEvent) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(PRECACHE_ASSETS)
-    }),
-  )
-})
+      return cache.addAll(PRECACHE_ASSETS);
+    })
+  );
+});
 
 // Activare service worker
-self.addEventListener("activate", (event) => {
+self.addEventListener("activate", (event: ExtendableEvent) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
-      return Promise.all(cacheNames.filter((name) => name !== CACHE_NAME).map((name) => caches.delete(name)))
-    }),
-  )
-})
+      return Promise.all(
+        cacheNames.filter((name) => name !== CACHE_NAME).map((name) => caches.delete(name))
+      );
+    })
+  );
+});
 
 // Strategia de cache: Cache First, apoi Network
-self.addEventListener("fetch", (event) => {
+self.addEventListener("fetch", (event: FetchEvent) => {
   // Skip cross-origin requests
   if (!event.request.url.startsWith(self.location.origin)) {
-    return
+    return;
   }
 
   // Skip non-GET requests
   if (event.request.method !== "GET") {
-    return
+    return;
   }
 
   // Pentru imagini și videoclipuri, folosim cache-first
@@ -46,47 +48,51 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(
       caches.match(event.request).then((cachedResponse) => {
         if (cachedResponse) {
-          return cachedResponse
+          return cachedResponse;
         }
 
         return fetch(event.request).then((response) => {
-          // Nu cache-uim răspunsuri eronate
+          // Verificați dacă răspunsul este valid
           if (!response || response.status !== 200 || response.type !== "basic") {
-            return response
+            return new Response("", { status: 404 }); // Returnează un răspuns gol sau un 404
           }
 
-          const responseToCache = response.clone()
+          const responseToCache = response.clone();
           caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache)
-          })
+            cache.put(event.request, responseToCache);
+          });
 
-          return response
-        })
-      }),
-    )
-    return
+          return response;
+        });
+      })
+    );
+    return;
   }
 
   // Pentru restul resurselor, folosim network-first
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        // Nu cache-uim răspunsuri eronate
         if (!response || response.status !== 200 || response.type !== "basic") {
-          return response
+          return new Response("", { status: 404 }); // Returnează un răspuns gol sau un 404
         }
 
-        const responseToCache = response.clone()
+        const responseToCache = response.clone();
         caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseToCache)
-        })
+          cache.put(event.request, responseToCache);
+        });
 
-        return response
+        return response;
       })
       .catch(() => {
-        return caches.match(event.request)
-      }),
-  )
-})
+        return caches.match(event.request).then((cachedResponse) => {
+          if (!cachedResponse) {
+            return new Response("", { status: 404 }); // Returnează un răspuns gol sau un 404
+          }
+          return cachedResponse;
+        });
+      })
+  );
+});
 
-export {}
+export {};
