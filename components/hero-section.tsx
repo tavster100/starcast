@@ -58,6 +58,13 @@ export function HeroSection() {
     }),
   };
 
+  const scrollToHowItWorks = () => {
+    const el = document.getElementById("how-it-works");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <>
       <motion.section
@@ -121,7 +128,7 @@ export function HeroSection() {
               alt="StarCast Logo"
               className={
                 isMobile
-                  ? "w-25 h-25 object-contain"
+                  ? "w-22 h-22 object-contain"
                   : "w-[14rem] h-[14rem] object-contain"
               }
             />
@@ -161,15 +168,18 @@ export function HeroSection() {
             <Button
               size={isMobile ? "default" : "lg"}
               className="w-full sm:w-auto bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600 text-white transition-all duration-300 hover:shadow-glow transform hover:scale-105"
-              onClick={() => openForm("signup")}
+              onClick={() =>
+                window.open("https://www.tiktok.com/t/ZMSejhb62/", "_blank")
+              }
             >
-              🌟 Alătură-te StarCast
+              🌟 Aplică acum
             </Button>
+
             <Button
               variant="outline"
               size={isMobile ? "default" : "lg"}
               className="w-full sm:w-auto border-white/20 bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-all duration-300 transform hover:scale-105"
-              onClick={() => openForm("consultation")}
+              onClick={scrollToHowItWorks}
             >
               <Play className="mr-2 h-4 w-4" /> Vezi Cum Funcționează
             </Button>

@@ -108,9 +108,10 @@ export function CTASection() {
                 whileTap={{ scale: 0.98 }}
               >
                 <Button
-                  size="lg"
                   className="bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600 text-white transition-all duration-300 hover:shadow-glow"
-                  onClick={() => openForm("signup")}
+                  onClick={() =>
+                    window.open("https://www.tiktok.com/t/ZMSejhb62/", "_blank")
+                  }
                 >
                   ✨ Înscrie-te Acum
                 </Button>

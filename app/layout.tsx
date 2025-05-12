@@ -2,7 +2,7 @@ import type React from "react";
 import "@/app/globals.css";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
-import Script from "next/script";
+import { ThemeWrapper } from "@/components/ThemeWrapper"; // adjust path if needed
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,14 +37,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#000000" />
       </head>
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem={false}
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <ThemeWrapper>{children}</ThemeWrapper>
       </body>
     </html>
   );

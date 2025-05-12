@@ -96,11 +96,12 @@ export function SiteHeader() {
 
             <div className="hidden md:block">
               <Button
-                size="sm"
-                className="bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600 transition-all duration-300 hover:shadow-glow"
-                onClick={() => openForm("signup")}
+                className="w-full sm:w-auto bg-gradient-to-r from-blue-500 to-pink-500 hover:from-blue-600 hover:to-pink-600 text-white transition-all duration-300 hover:shadow-glow transform hover:scale-105"
+                onClick={() =>
+                  window.open("https://www.tiktok.com/t/ZMSejhb62/", "_blank")
+                }
               >
-                Alătură-te StarCast
+                Aplică acum
               </Button>
             </div>
 
